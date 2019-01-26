@@ -33,6 +33,8 @@ class Game():
     light_speed = 0
     light_year = 0
 
+    galaxy_object_batch = pyglet.graphics.Batch()
+
     def __init__(self, window, rate, galaxy_width, galaxy_height, light_speed):
         self.viewer_window = window
         self.update_rate = rate
@@ -52,7 +54,8 @@ class Game():
             #camera zoom
             orbital_object.x *= (self.camera_zoom / self.camera_zoom_minimum)
             orbital_object.y *= (self.camera_zoom / self.camera_zoom_minimum)
-            orbital_object.draw()
+
+        self.galaxy_object_batch.draw()
 
     def mouse_scroll(self, x, y, scroll_x, scroll_y):
         self.camera_zoom += scroll_y
@@ -65,7 +68,7 @@ class Game():
         x *= viewer_window.height / self.galaxy_width
         y *= viewer_window.height / self.galaxy_height
         x -= (viewer_window.height - viewer_window.width) / 2
-        sprite = pyglet.sprite.Sprite(img=sprite, x=x, y=y)
+        sprite = pyglet.sprite.Sprite(img=sprite, x=x, y=y, batch=self.galaxy_object_batch)
         sprite.scale = 4
         return sprite
 
